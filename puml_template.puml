@@ -1,0 +1,62 @@
+@startuml "<DIAGNAME>"
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/users.puml
+!define osaPuml https://raw.githubusercontent.com/Crashedmind/PlantUML-opensecurityarchitecture2-icons/master
+!include osaPuml/Common.puml
+!include osaPuml/Misc/all.puml
+
+
+header
+<color:Red><$osa_warning*.5></color>
+<font color=red> Warning: This is a draft! </font>
+endheader
+
+' LAYOUT_TOP_DOWN()
+HIDE_STEREOTYPE()
+LAYOUT_WITH_LEGEND()
+
+' LAYOUT_AS_SKETCH()
+
+title
+    <TITLE>
+
+end title
+
+Person_Ext(name, "Role")
+
+
+' Lay_R(elsevieradmin, elsevierstaff)
+' Lay_R(elsevierstaff, cheminformatician)
+
+System_Boundary(bm, "Biology & Pharma-Covigilance Products"){
+    System(embase, "Embase", "Biology & Medical Device data search engine")
+    System(pharmap, "Pharmapendium", "Drug data search engine")
+    System(quosa, "Quosa", "Pharma-Covigilance Process Orchestration")
+    System(embio, "Embio", "Search across biology networks")
+    Lay_R(pharmap, quosa)
+    }
+
+
+
+
+
+' Rel_D(cheminformatician, cm, "Access and use")
+Rel_D(datascientist, bm, "Access and use")
+Rel_D(elsevierstaff, bm, "Access and use")
+Rel_D(elsevieradmin, bm, "Administration")
+Rel_D(pharmacologist, bm, "Administration")
+
+System_Ext(patentsupplier, "Patent Suppliers")
+System_Ext(tpasupplier, "Third Party Article Suppliers")
+System_Ext(elsviercontentsupplier, "Elsevier Content Suppliers")
+System_Ext(dbsupplier, "External Database Supplier")
+
+patentsupplier -u---> embase
+tpasupplier -u---> embase
+elsviercontentsupplier -u---> embase
+dbsupplier -u---> embase
+
+
+@enduml
